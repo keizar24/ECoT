@@ -164,7 +164,6 @@ def setup_pybullet(gui: bool = True):
     franka_id = p.loadURDF("franka_panda/panda.urdf", [0, 0, 0],
                            useFixedBase=True)
 
-    # Set initial robot position to resting joint positions (180 degree spun on XY plane)
     resting_jointPositions = [1.35 + 3.14159, 0.1, 0.31, -2.2, 0.0, 2.3, 2.967, 0.00, 0.00]
     for i in range(len(resting_jointPositions)):
         p.resetJointState(franka_id, i, resting_jointPositions[i])
