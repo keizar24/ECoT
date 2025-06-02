@@ -68,7 +68,7 @@ ARM_JOINTS   = list(range(7))      # Panda joints q0…q6
 GRIPPER_JOINTS = (9, 10)           # finger joints
 
 # camera parameters you already use
-EYE      = np.array([1.2, -0.725, 0.8])
+EYE      = np.array([0.075, -1.5, 0.8])
 TARGET   = np.array([0.075, -0.725, 0.08])
 CAM_UP   = np.array([0.0, 0.0, 1.0])
 
@@ -120,6 +120,15 @@ def main() -> None:
             # action is a tensor([dx, dy, dz, droll, dpitch, dyaw, dgrip])
             dx, dy, dz, droll, dpitch, dyaw, dgrip = action.tolist()
 
+            # ---------------------------------------------
+            # COORDINATE FIX: VLM was trained with side camera view, adjust for front view
+            # Rotate the action commands 90 degrees to match new camera orientation
+            dx_corrected = dy  # what VLM thinks is forward/back (dy) is now left/right (dx)
+            dy_corrected = -dx  # what VLM thinks is left/right (dx) is now back/forward (-dy)
+            dz_corrected = dz   # up/down remains the same
+            
+            dx, dy, dz = dx_corrected, dy_corrected, dz_corrected
+            
             # ---------------------------------------------
             # 5) current EE pose in WORLD frame
             link_state = p.getLinkState(sim["kuka"], 11, computeForwardKinematics=True)

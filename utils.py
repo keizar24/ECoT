@@ -142,7 +142,7 @@ def setup_pybullet(gui: bool = True):
 
     # Camera positioned to cover all objects in scene
     view_matrix = p.computeViewMatrix(
-        cameraEyePosition=[1.2, -0.725, 0.8],
+        cameraEyePosition=[0.075, -1.5, 0.8],
         cameraTargetPosition=[0.075, -0.725, 0.08],
         cameraUpVector=[0.0, 0.0, 1.0]
     )
@@ -157,7 +157,7 @@ def setup_pybullet(gui: bool = True):
     camera_pitch = -28
     camera_target_position = [0, -1.3, 0.6]
     p.resetDebugVisualizerCamera(camera_distance, camera_yaw, camera_pitch, camera_target_position)
-    p.configureDebugVisualizer(p.COV_ENABLE_GUI, 0)
+    p.configureDebugVisualizer(p.COV_ENABLE_GUI, 1)
     p.configureDebugVisualizer(p.COV_ENABLE_WIREFRAME, 0)
     p.configureDebugVisualizer(p.COV_ENABLE_SHADOWS, 1)
 
